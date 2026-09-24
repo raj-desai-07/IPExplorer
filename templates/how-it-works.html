@@ -1,0 +1,246 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn how IP Explorer works — a step-by-step visual guide to entering an IP address, triggering a lookup, and reading your detailed IP intelligence report." />
+  <title>How It Works — IP Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href='{% static "style.css" %}' />
+</head>
+<body>
+
+  <!-- BACKGROUND OVERLAY -->
+  <div class="bg-image" aria-hidden="true"></div>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="{% url 'home' %}" class="nav-logo" aria-label="IP Explorer home">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span>IP<strong>Explorer</strong></span>
+      </a>
+      <a href="{% url 'home' %}" class="hiw-back-link">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Home
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hiw-hero" id="hiw-hero">
+    <div class="hiw-hero-content">
+      <div class="hero-badge reveal-up">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        Step-by-Step Guide
+      </div>
+      <h1 class="hiw-hero-title reveal-up delay-1">
+        How IP Explorer
+        <span class="gradient-text">Works</span>
+      </h1>
+      <p class="hiw-hero-tagline reveal-up delay-2">
+        From entering an IP address to reading a full intelligence report — here's exactly what happens behind the scenes, and what you'll see on screen at each step.
+      </p>
+      <div class="reveal-up delay-3">
+        <a href="{% url 'home' %}" class="hiw-back-link">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to IP Explorer
+        </a>
+      </div>
+    </div>
+    <!-- Decorative orbs (reusing existing CSS) -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+  </header>
+
+  <!-- TIMELINE SECTION -->
+  <section class="hiw-timeline-section" aria-labelledby="hiw-timeline-heading">
+    <div class="section-inner">
+      <div class="section-header reveal-up">
+        <div class="section-badge">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          The Full Journey
+        </div>
+        <h2 id="hiw-timeline-heading">Five Simple Steps</h2>
+        <p>Everything that happens from the moment you open the page to reading your results</p>
+      </div>
+
+      <div class="hiw-timeline" role="list">
+
+        <!-- STEP 1 — LEFT -->
+        <div class="timeline-item left reveal-up delay-1" role="listitem">
+          <div class="timeline-content">
+            <div class="timeline-step-label">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M17.5 2.5a2.121 2.121 0 0 1 3 3L12 14l-4 1 1-4 7.5-7.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Step 01
+            </div>
+            <h3>Enter an IP Address</h3>
+            <p>
+              Type or paste any public IPv4 or IPv6 address into the search field on the home page. The field accepts the full range of valid formats — dotted decimal IPv4 like <code style="font-family:var(--font-mono);color:var(--clr-accent);font-size:0.85em">192.168.1.1</code> or compressed IPv6 notation.
+            </p>
+            <div class="timeline-detail">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+              Supports IPv4 &amp; IPv6
+            </div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-step-bubble">
+              <span class="timeline-step-num">01</span>
+            </div>
+          </div>
+          <div class="timeline-spacer" aria-hidden="true"></div>
+        </div>
+
+        <!-- STEP 2 — RIGHT -->
+        <div class="timeline-item right reveal-up delay-2" role="listitem">
+          <div class="timeline-spacer" aria-hidden="true"></div>
+          <div class="timeline-node">
+            <div class="timeline-step-bubble">
+              <span class="timeline-step-num">02</span>
+            </div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-step-label">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Step 02
+            </div>
+            <h3>Click the Lookup Button</h3>
+            <p>
+              Hit the <strong style="color:#fff">Lookup</strong> button (or press <kbd style="font-family:var(--font-mono);background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;font-size:0.85em;border:1px solid rgba(255,255,255,0.15)">Enter</kbd>) to trigger the search. You'll see a brief pulse animation on the search bar, giving instant visual feedback that your request is being processed.
+            </p>
+            <div class="timeline-detail">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Instant visual feedback
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 — LEFT -->
+        <div class="timeline-item left reveal-up delay-1" role="listitem">
+          <div class="timeline-content">
+            <div class="timeline-step-label">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Step 03
+            </div>
+            <h3>Intelligence Databases Queried</h3>
+            <p>
+              The IP is cross-referenced against multiple geolocation and network intelligence sources. This resolves the address to a geographic region, ISP, autonomous system number (ASN), timezone, and connection type — all in milliseconds.
+            </p>
+            <div class="timeline-detail">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Multi-source resolution
+            </div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-step-bubble">
+              <span class="timeline-step-num">03</span>
+            </div>
+          </div>
+          <div class="timeline-spacer" aria-hidden="true"></div>
+        </div>
+
+        <!-- STEP 4 — RIGHT -->
+        <div class="timeline-item right reveal-up delay-2" role="listitem">
+          <div class="timeline-spacer" aria-hidden="true"></div>
+          <div class="timeline-node">
+            <div class="timeline-step-bubble">
+              <span class="timeline-step-num">04</span>
+            </div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-step-label">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M9 9h6M9 12h6M9 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Step 04
+            </div>
+            <h3>Results Appear in Cards</h3>
+            <p>
+              The IP Details section slides into view with a smooth fade animation. Up to 18 data points are displayed in a responsive card grid — each card reveals in a staggered sequence so you can take it all in at a glance without visual overload.
+            </p>
+            <div class="timeline-detail">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              18 data points, staggered reveal
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5 — LEFT -->
+        <div class="timeline-item left reveal-up delay-1" role="listitem">
+          <div class="timeline-content">
+            <div class="timeline-step-label">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 9a3 3 0 1 1 6 0c0 2-3 3-3 3m0 4h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>
+              Step 05
+            </div>
+            <h3>Explore &amp; Use Your Data</h3>
+            <p>
+              Each card is independently readable. Need your own public IP? Use the <strong style="color:#fff">How to Find my IP</strong> button in the navbar to detect and copy your address directly — then paste it straight into the lookup field to explore your own connection details.
+            </p>
+            <div class="timeline-detail">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg>
+              One-click copy to clipboard
+            </div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-step-bubble">
+              <span class="timeline-step-num">05</span>
+            </div>
+          </div>
+          <div class="timeline-spacer" aria-hidden="true"></div>
+        </div>
+
+      </div><!-- /.hiw-timeline -->
+    </div><!-- /.section-inner -->
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="results-section" style="padding: 80px 0;" aria-label="Try it now">
+    <div class="section-inner">
+      <div class="section-header reveal-up" style="margin-bottom: 32px;">
+        <div class="section-badge">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Ready?
+        </div>
+        <h2>Try It for Yourself</h2>
+        <p>Jump straight to the lookup tool and explore any IP address in seconds.</p>
+      </div>
+      <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;" class="reveal-up delay-1">
+        <a href="{% url 'home' %}" class="lookup-btn" style="display:inline-flex;align-items:center;gap:9px;text-decoration:none;padding:15px 30px;font-size:1rem;border-radius:var(--radius-xl);">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Start Lookup
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        IP<strong>Explorer</strong>
+      </div>
+      <p class="footer-copy">
+        Developed by
+        <a href="https://www.linkedin.com/in/raj-desai" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="Raj Desai LinkedIn profile">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          Raj Desai
+        </a>
+      </p>
+      <p class="footer-note">IP intelligence for everyone &mdash; static frontend demo</p>
+    </div>
+  </footer>
+
+  <script src='{% static "script.js" %}'></script>
+</body>
+</html>

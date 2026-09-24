@@ -1,0 +1,264 @@
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IP Explorer — Enter any public IP address to reveal its geographic location, ISP, timezone, and network details instantly." />
+  <title>IP Explorer — Discover IP Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+<body>
+
+  <!-- BACKGROUND OVERLAY -->
+  <div class="bg-image" aria-hidden="true"></div>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="{% url 'home' %}" class="nav-logo" aria-label="IP Explorer home">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span>IP<strong>Explorer</strong></span>
+      </a>
+      <div class="nav-links">
+        <a href="{% url 'how-it-works' %}" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          How It Works
+        </a>
+        <button id="how-to-find-ip-nav-btn" class="nav-cta-btn" aria-haspopup="dialog" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+          How to Find my IP
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge reveal-up">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        IP Intelligence Platform
+      </div>
+      <h1 class="hero-title reveal-up delay-1">
+        Decode Any<br/>
+        <span class="gradient-text">IP Address</span>
+      </h1>
+      <p class="hero-tagline reveal-up delay-2">
+        Enter a public IP address below to instantly reveal its geographic location,
+        ISP, network details, timezone, and much more.
+      </p>
+
+      <!-- INPUT FORM -->
+      <form method="POST" action="{% url 'ip-details' %}">
+        {% csrf_token %}
+        <div class="search-container reveal-up delay-3">
+          <div class="search-box" id="search-box">
+            <svg class="search-prefix-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <input
+              type="text"
+              id="ip-input"
+              class="ip-input"
+              placeholder="e.g. 8.8.8.8 or 2001:4860:4860::8888"
+              autocomplete="off"
+              spellcheck="false"
+              aria-label="Enter IP address"
+              maxlength="45"
+              name = "ip-address"
+              required
+            />
+            <button id="lookup-btn" class="lookup-btn" aria-label="Look up IP address">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Lookup</span>
+            </button>
+          </div>
+          <p class="search-hint">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5"/></svg>
+            Supports Only Public IP Addresses( IPv4 & IPv6 )
+          </p>
+        </div>
+      </form>
+
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+
+
+            <!-- ERROR TOAST -->
+
+            <div
+                class="glass-error-toast"
+                id="glassErrorToast"
+            >
+
+                <div class="glass-error-icon">
+                    <span>!</span>
+                </div>
+
+
+                <div class="glass-error-content">
+
+                    <div class="glass-error-title">
+                        Something went wrong
+                    </div>
+
+                    <div class="glass-error-message">
+                        {{ message }}
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="glass-error-close"
+                    id="glassErrorClose"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+
+                <div class="glass-error-progress"></div>
+
+            </div>
+
+
+
+
+          </div>
+        {% endfor %}
+      {% endif %}
+
+
+      <!-- HOW TO GET MY IP BUTTON -->
+      <div class="how-btn-wrapper reveal-up delay-4">
+        <button id="how-to-get-ip-btn" class="how-btn" aria-haspopup="dialog" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          How to Get My IP
+        </button>
+      </div>
+    </div>
+
+    <!-- Decorative floating orbs -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+  </header>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works" aria-labelledby="how-heading">
+    <div class="section-inner">
+      <div class="section-header reveal-up">
+        <div class="section-badge">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Quick &amp; Simple
+        </div>
+        <h2 id="how-heading">How It Works</h2>
+        <p>Three simple steps to reveal comprehensive IP intelligence</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal-up delay-1">
+          <div class="step-number">01</div>
+          <h3>Enter IP Address</h3>
+          <p>Type or paste any public IPv4 or IPv6 address into the search field above.</p>
+        </div>
+        <div class="step-card reveal-up delay-2">
+          <div class="step-number">02</div>
+          <h3>Instant Analysis</h3>
+          <p>Our system processes the IP against multiple intelligence databases in milliseconds.</p>
+        </div>
+        <div class="step-card reveal-up delay-3">
+          <div class="step-number">03</div>
+          <h3>View Full Report</h3>
+          <p>Detailed geographic, network, and ISP data is displayed in a clean, readable format.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        IP<strong>Explorer</strong>
+      </div>
+      <p class="footer-copy">
+        Developed by
+        <a href="https://www.linkedin.com/in/rajdesai10" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="Raj Desai LinkedIn profile">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          Raj Desai
+        </a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- MODAL: HOW TO GET MY IP -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modal-close" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <h2 id="modal-title">Find Your Public IP Address</h2>
+
+      <div class="modal-steps">
+        <div class="modal-step">
+          <span class="modal-step-num">1</span>
+          <span>Click <strong>AI IP Finder</strong> to detect your current public IP</span>
+        </div>
+        <div class="modal-step">
+          <span class="modal-step-num">2</span>
+          <span>Copy the detected IP address with one click</span>
+        </div>
+        <div class="modal-step">
+          <span class="modal-step-num">3</span>
+          <span>Paste it into the search bar to explore its details</span>
+        </div>
+      </div>
+
+      <button class="ai-finder-btn" id="ai-finder-btn" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        AI IP Finder
+        <span class="btn-pulse" aria-hidden="true"></span>
+      </button>
+
+      <!-- Detected IP result (hidden until clicked) -->
+      <div class="detected-ip-box" id="detected-ip-box" aria-live="polite" aria-hidden="true">
+        <span class="detected-label">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Your Public IP Address
+        </span>
+        <div class="detected-ip-row">
+          <code class="detected-ip-value" id="detected-ip-value"></code>
+          <button class="copy-btn" id="copy-ip-btn" aria-label="Copy IP address to clipboard">
+            <svg class="copy-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg>
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="copy-label">Copy</span>
+            <span class="copied-tooltip" aria-live="assertive">Copied!</span>
+          </button>
+        </div>
+      </div>
+
+  <script src='{% static "script.js" %}'></script>
+
+</body>
+</html>
